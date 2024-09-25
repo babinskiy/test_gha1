@@ -19,8 +19,22 @@ jobs:
       name: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-latest
     steps:
-      - name: Invoke workflow with inputs
-        uses: benc-uk/workflow-dispatch@v1
+      # - name: Invoke workflow with inputs
+      #   uses: benc-uk/workflow-dispatch@v1
+      #   with:
+      #     workflow: test_deploy2.yml
+      #     ref: ${{ github.ref}}
+      #     inputs: '{ "environment": "${{ github.event.inputs.environment }}" }'
+      - name: Trigger deploy
+        uses: convictional/trigger-workflow-and-wait@v1.6.1
         with:
-          workflow: test_deploy2.yml
-          inputs: '{ "environment": "${{ github.event.inputs.environment }}" }'
+          owner: babinskiy
+          repo: test_gha1
+          github_token: ${{ secrets.GH_TOKEN }}
+          workflow_file_name: test_deploy2.yml
+          ref: ${{ github.ref }}
+          wait_interval: 15
+          client_payload: '{ "environment": "${{ github.event.inputs.environment }}" }'
+          propagate_failure: true
+          trigger_workflow: true
+          wait_workflow: true
