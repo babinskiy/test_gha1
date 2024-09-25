@@ -20,14 +20,26 @@ jobs:
       - name: Some dummy step
         run: echo "Dummy step"
 
-  deploy:
+  deploy-app1:
     needs: dummy
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.event.inputs.environment }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
+      - name: Deploy to ${{ github.event.inputs.environment }}
+        run: echo "Deploying to ${{ github.event.inputs.environment }}"
+
+  deploy-app2:
+    needs: dummy
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Deploy to ${{ github.event.inputs.environment }}
         run: echo "Deploying to ${{ github.event.inputs.environment }}"
