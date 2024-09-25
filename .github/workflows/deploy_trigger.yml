@@ -1,0 +1,26 @@
+name: deploy trigger
+run-name: Deploy to ${{ github.event.inputs.environment }}
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        type: choice
+        options:
+        - dev1
+        - dev2
+        - prod
+        default: 'dev1'
+
+jobs:
+  deploy-app1:
+    environment:
+      name: ${{ github.event.inputs.environment }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Invoke workflow with inputs
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: test_deploy2.yml
+          inputs: '{ "environment": "${{ github.event.inputs.environment }}" }'

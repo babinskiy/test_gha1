@@ -1,0 +1,21 @@
+name: deploy reusable
+run-name: Deploy to ${{ github.event.inputs.environment }}
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        type: choice
+        options:
+        - dev1
+        - dev2
+        - prod
+        default: 'dev1'
+
+jobs:
+  deploy-app1:
+    uses: ./.github/workflows/test_deploy2.yml
+    secrets: inherit
+    environment:
+      name: ${{ github.event.inputs.environment }}
