@@ -1,4 +1,8 @@
 name: deploy with trigger
+run-name: ${{ github.workflow}}/${{ github.event.inputs.environment }}
+concurrency:
+  group: deploy-${{ github.event.inputs.environment }}
+  cancel-in-progress: false
 on:
   workflow_dispatch:
     inputs:

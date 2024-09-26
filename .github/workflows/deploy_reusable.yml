@@ -1,5 +1,8 @@
 name: deploy reusable
-run-name: Deploy to ${{ github.event.inputs.environment }}
+run-name: ${{ github.workflow}}/${{ github.event.inputs.environment }}
+concurrency:
+  group: deploy-${{ github.event.inputs.environment }}
+  cancel-in-progress: false
 on:
   workflow_dispatch:
     inputs:
