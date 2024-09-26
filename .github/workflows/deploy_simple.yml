@@ -15,6 +15,11 @@ on:
           - dev2
           - prod
         default: 'dev1'
+      wait_time:
+        description: 'Time to wait before deployment'
+        required: false
+        type: number
+        default: 10
 
 jobs:
   dummy:
@@ -35,5 +40,5 @@ jobs:
       - name: Deploy to ${{ github.event.inputs.environment }}
         run: echo "Deploying to ${{ github.event.inputs.environment }}"
 
-      - name: Wait for 120 seconds
-        run: sleep 120
+      - name: Wait for ${{ github.event.inputs.wait_time }} seconds
+        run: sleep ${{ github.event.inputs.wait_time }}
