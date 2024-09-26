@@ -1,4 +1,4 @@
-name: deploy
+name: deploy simple
 run-name: Deploy to ${{ github.event.inputs.environment }}
 on:
   workflow_dispatch:
@@ -32,23 +32,5 @@ jobs:
       - name: Deploy to ${{ github.event.inputs.environment }}
         run: echo "Deploying to ${{ github.event.inputs.environment }}"
 
-  deploy-app2:
-    needs: dummy
-    runs-on: ubuntu-latest
-    environment:
-      name: ${{ github.event.inputs.environment }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Deploy to ${{ github.event.inputs.environment }}
-        run: echo "Deploying to ${{ github.event.inputs.environment }}"
-
-  create-release:
-    needs: [deploy-app1, deploy-app2]
-    runs-on: ubuntu-latest
-    environment:
-      name: ${{ github.event.inputs.environment }}
-    steps:
-      - name: Create release
-        run: echo "Creating release"
+      - name: Wait for 120 seconds
+        run: sleep 120
